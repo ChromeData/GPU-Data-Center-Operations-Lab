@@ -1,8 +1,6 @@
 # Walkthrough
 
-**Four short chapters · a video loop and the steps for each**
-
-The video loops show the work at a higher speed. The steps give the real commands.
+**Four short chapters**
 
 Start the lab with `.\START-DCLAB.ps1`. The user name and the password for each BMC are `admin`.
 A tray is one server in the rack.
