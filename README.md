@@ -107,7 +107,7 @@ Open **Quiz**, then **Work orders**. Drag to turn the model. Scroll to change th
 | Problem | Click this part | Then do this |
 |---|---|---|
 | No power, voltage errors | The busbar | Loosen all the screws. Torque to 20 in-lb: back, front, middle. |
-| No power, HMC | The HMC board and its cable | Connect them again. |
+| No power, HMC | The HMC board and its slimline cables | Reseat the cables and the card. |
 | Leak alarm | The leak sensor | Check the BMC version. Use the UV light. Clean the sensor. |
 | Tray replacement | The handles, rails, NVMe drives, and M.2 | Move them to the new tray. Send the swap form. |
 | NVLink switch offline | The switch | Reset the spare switch. Install it. Let it configure itself. |
