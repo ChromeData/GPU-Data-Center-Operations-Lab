@@ -1,6 +1,6 @@
 """Drive the DC Lab web app with a real browser: test it and record the demo video.
 
-    python tools/record_demo.py [live] [bench] [quiz] [--video]
+    python tools/record_demo.py [walk] [live] [bench] [quiz] [--video] [--hq] [--headless]
 
 Needs the lab running (START-DCLAB.ps1). Screenshots go to tools/out, the video to tools/out/video.
 """
@@ -17,6 +17,7 @@ OUT = os.path.join(HERE, "out")
 os.makedirs(OUT, exist_ok=True)
 PORT = 8770
 HQ = "--hq" in sys.argv
+HEADLESS = "--headless" in sys.argv
 W, H = (1920, 1080) if HQ else (1600, 900)
 args = [a for a in sys.argv[1:] if not a.startswith("--")] or ["walk", "live", "bench", "quiz"]
 VIDEO = "--video" in sys.argv
@@ -59,7 +60,10 @@ class Capture:
         with open(os.path.join(self.dir, name), "wb") as f:
             f.write(self.b64.b64decode(ev["data"]))
         self.frames.append((name, ev["metadata"]["timestamp"]))
-        self.cdp.send("Page.screencastFrameAck", {"sessionId": ev["sessionId"]})
+        try:
+            self.cdp.send("Page.screencastFrameAck", {"sessionId": ev["sessionId"]})
+        except Exception:
+            pass                      # a last frame can arrive while the page is closing
 
     def start(self):
         self.cdp.send("Page.startScreencast", {"format": "jpeg", "quality": 90, "everyNthFrame": 2})
@@ -406,8 +410,11 @@ def main():
         sys.exit("Lab web server is not running. Start it with START-DCLAB.ps1")
     wsl("rm -f ~/dclab/state/progress.json; rm -rf ~/dclab/work/* ~/ezBMC_Logs")
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=False, args=["--ignore-gpu-blocklist", "--enable-gpu", "--use-angle=d3d11",
-                                                           f"--window-size={W},{H + 90}", "--window-position=40,20"])
+        # --headless: no window on the desktop. channel="chromium" selects the full browser in its new
+        # headless mode, which keeps the GPU (the bundled headless shell has no WebGL 2 on a GPU).
+        launch = dict(headless=True, channel="chromium") if HEADLESS else dict(headless=False)
+        browser = pw.chromium.launch(args=["--ignore-gpu-blocklist", "--enable-gpu", "--use-angle=d3d11",
+                                           f"--window-size={W},{H + 90}", "--window-position=40,20"], **launch)
         kw = dict(viewport={"width": W, "height": H}, device_scale_factor=1)
         if VIDEO:
             kw.update(record_video_dir=os.path.join(OUT, "video"), record_video_size={"width": W, "height": H})

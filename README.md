@@ -10,6 +10,9 @@ browser.
 |---|---|
 | ![Ticket board](docs/tickets.jpg) | ![Work order on the bench](docs/workorder.jpg) |
 
+**New here? Follow the [walkthrough](docs/WALKTHROUGH.md):** four short chapters, each with a
+looping clip and the steps written out.
+
 ## What is in it
 
 - **A rack that talks back.** 18 compute trays and 9 NVLink switches, each with a BMC. `ipmitool`
@@ -94,7 +97,8 @@ After that every lab ticket is a Jira issue. `dclab start` moves it to In Progre
 - `blender/` : the scene and render scripts. `python hall3.py final 128` renders every view (needs
   the `bpy` module and a GPU; about 85 minutes on an RTX 3090). The rendered images are in
   `lab/web/img`, so you do not have to.
-- `tools/` : `make_ids.py` rebuilds the click map, `record_demo.py` drives the page in a real browser.
+- `tools/` : `make_ids.py` rebuilds the click map, `record_demo.py` drives the page in a real browser
+  (`--headless` for no window), `make_chapters.py` builds the walkthrough loops.
 - `rhcsa-rhce/` : 11 RHCSA and 8 RHCE tasks with graders.
 
 ## Tests
