@@ -57,7 +57,7 @@ The Red Hat tasks use the same data center story (a GPU server log collector) an
 
 ## Walkthrough
 
-**[Four short chapters](docs/WALKTHROUGH.md)**, each with a looping clip and the steps written out.
+**[Four short chapters](docs/WALKTHROUGH.md)** with looping clips and steps.
 
 ## Run it
 
@@ -65,28 +65,14 @@ The Red Hat tasks use the same data center story (a GPU server log collector) an
 .\START-DCLAB.ps1
 ```
 
-Needs Windows 11 with WSL 2 and Ubuntu (systemd on), plus `python3`, `openssl`, `curl`, `jq` and
-`iproute2` in the distro, and a browser with WebGL 2. Everything listens on 127.0.0.1.
+Needs Windows 11 with WSL 2 and Ubuntu. Runs on your machine only.
 
 ```
-dclab list            all 24 tickets
-dclab start 104       start a ticket (TEACH first, then DO)
-dclab grade           check your work
-dclab nudge | walk | show     three hint levels
-dclab learn leak      the facts for a topic        dclab drill leak     test yourself
-dclab rack            trays, service tags, BMC IPs  (every BMC: admin / admin)
-dclab speak           60 seconds, out loud
+dclab list         all 24 tickets
+dclab start 104    start a ticket
+dclab grade        check your work
+dclab nudge        a hint (then walk, then show)
 ```
-
-Tools on the path: `ipmitool`, `curl ... | jq` for Redfish on `https://<BMC_IP>`, `ezbmc <BMC_IP>`,
-and `tech` for your hands (`tech -h`).
-
-In the page: **Walk** with the arrow keys, **Live** for the terminals and tickets, **Quiz** for work
-orders and drills, and **Front / Rear / Hall / Bench** to jump to a spot.
-
-**Jira (optional):** create a free Jira Cloud site with a Kanban project keyed `DCOPS` and an API
-token, then run `dclab jira setup` and `dclab jira push`. Tickets then move on the board as you
-start and pass them.
 
 ## What is real and what is simulated
 
@@ -99,32 +85,3 @@ start and pass them.
   names, counts and positions are right; exact dimensions are not.
 - The Jira link has been tested against a local stand-in for the Jira API
   (`lab/tests/jira_mock.py`), not against a live site.
-
-## Files
-
-- `lab/` : the simulator (`lib/`), the fake tools (`bin/`), the web app (`web/`), tests (`tests/`).
-- `rhcsa-rhce/` : 11 RHCSA and 8 RHCE tasks with graders, for two Rocky VMs.
-- `docs/` : the walkthrough and its clips.
-- `blender/` : the scene and render scripts. The rendered images are already in `lab/web/img`.
-- `tools/` : `record_demo.py` drives the page in a real browser, `make_chapters.py` builds the
-  walkthrough clips, `make_ids.py` rebuilds the click map.
-
-## Tests
-
-```
-python3 ~/dclab/tests/solve_all.py     # every ticket must fail untouched and pass when solved
-python tools/test_walk.py              # browser: arrow keys, W A S D, floor plan
-python tools/record_demo.py live bench quiz    # browser: a live ticket, the bench flow, six work orders
-```
-
-The browser tests run on the Windows side and need `pip install playwright` and
-`playwright install chromium`.
-
-## Credits
-
-three.js and xterm.js are vendored under the MIT license (`lab/web/vendor/NOTICE.md`).
-
-This is a personal study project. It is not affiliated with or endorsed by NVIDIA, Dell or any data
-center operator. Product names belong to their owners.
-
-**Built with:** Python, JavaScript (three.js, xterm.js), Bash, Blender
