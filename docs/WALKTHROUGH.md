@@ -107,14 +107,3 @@ to zoom. The loop runs these six:
 
 There are 25 work orders in all, and six drill modes next to them (Tour, Name it, Find it, Type it,
 Tag hunt, Numbers).
-
-## How these were recorded
-
-`tools/record_demo.py` drives the lab page in a real browser and checks each part as it goes, so a
-loop can only be recorded from a run that passed. `tools/make_chapters.py` turns the captures into
-the loops on this page.
-
-```
-python tools/record_demo.py walk --hq --headless     # one part per run; rename tools/out/capture to tools/out/cap_walk
-python tools/make_chapters.py
-```
