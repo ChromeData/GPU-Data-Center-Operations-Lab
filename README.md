@@ -69,12 +69,3 @@ dclab start 104    start a ticket
 dclab grade        check your work
 dclab nudge        a hint (then walk, then show)
 ```
-
-## Real and simulated
-
-- **Real:** The commands and the sequence of work. They come from my notes from a GB200 NVL72
-  field-service class.
-- **Simulated:** The rack, the BMCs, and the Redfish service.
-- **Not exact:** Most firmware build numbers and the dimensions in the pictures.
-
-This is a personal study project. It has no connection with NVIDIA, Dell, or a data center operator.
